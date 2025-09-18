@@ -1,12 +1,11 @@
 @use "partials/variables";
 @use "partials/nav";
+@use "partials/main-content";
 
 .main-content {
   display: grid;
   grid-template-columns: 200px 1fr;
   gap: 16px;
-  padding: 16px;
-  background-color: variables.$background-color;
 }
 
 .product-grid {

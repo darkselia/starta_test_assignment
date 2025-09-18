@@ -10,11 +10,13 @@
     <a class="nav__links" href="/index.html">Каталог</a>
     <a class="nav__links nav__links_active" href="/admin/import.html">Импорт товаров</a>
 </nav>
-<h1>Страница для импорта товаров на сайт</h1>
-<form id="import-form">
-    <input id="import-products" type="file" name="file" accept=".csv, .json">
-    <button>Импортировать товары</button>
-</form>
+<section class="main-content">
+    <h1>Импорт товаров на сайт</h1>
+    <form id="import-form" class="import-form">
+        <input id="import-products" type="file" name="file" accept=".csv, .json">
+        <button>Импортировать товары</button>
+    </form>
+</section>
 <script src="../scripts/import.js"></script>
 </body>
 </html>
