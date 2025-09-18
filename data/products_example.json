@@ -1,0 +1,50 @@
+[
+    {
+        "id": 101,
+        "name": "Acme Kettle 1.7L",
+        "category": "kitchen",
+        "price": 2490,
+        "stock": 5,
+        "rating": 4.8,
+        "reviews_count": 120,
+        "created_at": "2025-07-20",
+        "image": "/images/kettle.jpg",
+        "promo": null
+    },
+    {
+        "id": 102,
+        "name": "Acme Toaster 2-Slice",
+        "category": "kitchen",
+        "price": 1990,
+        "stock": 10,
+        "rating": 4.5,
+        "reviews_count": 85,
+        "created_at": "2025-06-15",
+        "image": "/images/toaster.jpg",
+        "promo": null
+    },
+    {
+        "id": 103,
+        "name": "Acme Blender 500W",
+        "category": "kitchen",
+        "price": 3490,
+        "stock": 3,
+        "rating": 4.7,
+        "reviews_count": 60,
+        "created_at": "2025-05-10",
+        "image": "/images/blender.jpg",
+        "promo": null
+    },
+    {
+        "id": 104,
+        "name": "Acme Coffee Maker",
+        "category": "kitchen",
+        "price": 4990,
+        "stock": 7,
+        "rating": 4.9,
+        "reviews_count": 200,
+        "created_at": "2025-04-05",
+        "image": "/images/coffeemaker.jpg",
+        "promo": null
+    }
+]
