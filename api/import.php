@@ -71,7 +71,7 @@ if ($errors) {
     exit;
 }
 
-file_put_contents(__DIR__ . '/../data/products.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+file_put_contents(__DIR__ . '/../api/products.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 echo json_encode(['success' => true]);
 
 
