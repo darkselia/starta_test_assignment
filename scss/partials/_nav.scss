@@ -1,0 +1,25 @@
+@use "variables";
+
+.nav {
+  display: flex;
+  gap: 10px;
+  padding: 16px 0 0 16px;
+  width: 100%;
+  border-bottom: 2px solid variables.$primary-color;
+}
+
+.nav__links {
+  padding: 4px 6px;
+  color: black;
+  border: 1px solid variables.$primary-color;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-decoration: none;
+  outline: none;
+  border-bottom-color: variables.$background-color;
+}
+
+.nav__links_active {
+  background-color: variables.$background-color;
+  font-weight: bold;
+}

@@ -15,21 +15,28 @@
         <p class="product__stock"></p>
     </article>
 </template>
+
 <nav class="nav">
-    <a href="/index.html">Каталог</a>
-    <a href="/admin/import.html">Импорт товаров</a>
-    <!--<a href="/reports.html">Отчеты</a>-->
+    <a class="nav__links nav__links_active" href="/index.html">Каталог</a>
+    <a class="nav__links" href="/admin/import.html">Импорт товаров</a>
 </nav>
 
-<h1>Публичный каталог</h1>
-<section class="grid" id="product-grid">
-    <!-- Продукты будут добавлены сюда с помощью JavaScript -->
 
-</section>
-<section class="pagination">
-    <button id="previous-button">Предыдущая</button>
-    <div id="page-number"></div>
-    <button id="next-button">Следующая</button>
+<section class="main-content">
+    <div class="filters">a</div>
+    <div>
+        <h1>Публичный каталог</h1>
+
+        <section class="product-grid" id="product-grid">
+            <!-- Продукты будут добавлены сюда с помощью JavaScript -->
+
+        </section>
+        <section class="pagination">
+            <button id="previous-button">Предыдущая</button>
+            <div id="page-number"></div>
+            <button id="next-button">Следующая</button>
+        </section>
+    </div>
 </section>
 <script src="scripts/index.js"></script>
 </body>

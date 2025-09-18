@@ -1,4 +1,15 @@
-.grid {
+@use "partials/variables";
+@use "partials/nav";
+
+.main-content {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 16px;
+  padding: 16px;
+  background-color: variables.$background-color;
+}
+
+.product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
