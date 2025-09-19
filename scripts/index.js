@@ -1,29 +1,33 @@
+const urlParams = new URLSearchParams(window.location.search);
+
 const productTemplate = document.getElementById('product-template');
 const productGrid = document.getElementById('product-grid');
 const previousButton = document.getElementById('previous-button');
 const nextButton = document.getElementById('next-button');
 const pageNumberDisplay = document.getElementById('page-number');
+
 const PAGE_SIZE = 12;
 
 const filterForm = document.getElementById('filters');
 const searchInput = document.getElementById('search');
+searchInput.value = urlParams.get('q') || '';
 const categorySelect = document.getElementById('category');
+categorySelect.value = urlParams.get('cat') || '';
 const minPriceInput = document.getElementById('min-price');
+minPriceInput.value = urlParams.get('min') || '';
 const maxPriceInput = document.getElementById('max-price');
+maxPriceInput.value = urlParams.get('max') || '';
 const minRatingInput = document.getElementById('min-rating');
+minRatingInput.value = urlParams.get('rating') || '';
 const inStockOnlyInput = document.getElementById('in-stock');
+inStockOnlyInput.checked = urlParams.get('inStock') === '1';
 
 const sortSelect = document.getElementById('sort-by');
+sortSelect.value = urlParams.get('sort') || 'date-desc';
 
 let products = [];
 let filteredProducts = [];
-let pageNumber = 1;
-
-function updatePagination() {
-    previousButton.disabled = pageNumber === 1;
-    nextButton.disabled = pageNumber * PAGE_SIZE >= filteredProducts.length;
-    pageNumberDisplay.textContent = `Страница ${pageNumber}`;
-}
+let pageNumber = urlParams.get('page') ?? 1;
 
 async function fetchProducts() {
     try {
@@ -34,6 +38,12 @@ async function fetchProducts() {
         console.error('Error fetching products:', error);
         return [];
     }
+}
+
+function updatePagination() {
+    previousButton.disabled = pageNumber === 1;
+    nextButton.disabled = pageNumber * PAGE_SIZE >= filteredProducts.length;
+    pageNumberDisplay.textContent = `Страница ${pageNumber}`;
 }
 
 function displayProducts() {
@@ -81,27 +91,10 @@ function sortProducts() {
         case 'rating-desc':
             filteredProducts.sort((a, b) => b.rating - a.rating);
             break;
-
     }
 }
 
-updatePagination();
-fetchProducts().then(displayProducts).then(updatePagination);
-
-previousButton.addEventListener('click', () => {
-    pageNumber--;
-    updatePagination();
-    displayProducts();
-});
-nextButton.addEventListener('click', () => {
-    pageNumber++;
-    updatePagination();
-    displayProducts();
-});
-
-filterForm.addEventListener('submit', event => {
-    event.preventDefault();
-
+function filterProducts() {
     const searchTerm = searchInput.value.toLowerCase();
     const category = categorySelect.value;
     const minPrice = minPriceInput.value ? parseFloat(minPriceInput.value) : 0;
@@ -117,9 +110,49 @@ filterForm.addEventListener('submit', event => {
         product.rating >= minRating &&
         (!inStockOnly || product.stock > 0)
     );
+}
+
+function preserveState() {
+    const state = new URLSearchParams();
+    state.set('q', searchInput.value);
+    state.set('cat', categorySelect.value);
+    state.set('min', minPriceInput.value);
+    state.set('max', maxPriceInput.value);
+    state.set('rating', minRatingInput.value);
+    state.set('inStock', inStockOnlyInput.checked ? '1' : '0');
+    state.set('sort', sortSelect.value);
+    state.set('page', pageNumber.toString());
+    const newUrl = `?${state}`;
+    window.history.pushState({}, '', newUrl);
+}
+
+updatePagination();
+fetchProducts()
+    .then(filterProducts)
+    .then(displayProducts)
+    .then(updatePagination);
+
+previousButton.addEventListener('click', () => {
+    pageNumber--;
+    updatePagination();
+    displayProducts();
+    preserveState();
+});
+nextButton.addEventListener('click', () => {
+    pageNumber++;
+    updatePagination();
+    displayProducts();
+    preserveState();
+});
+
+filterForm.addEventListener('submit', event => {
+    event.preventDefault();
+
+    filterProducts();
     pageNumber = 1;
     updatePagination();
     displayProducts();
+    preserveState();
 });
 
 filterForm.addEventListener('reset', () => {
@@ -127,6 +160,7 @@ filterForm.addEventListener('reset', () => {
     pageNumber = 1;
     updatePagination();
     displayProducts();
+    setTimeout(preserveState, 0);
 });
 
 sortSelect.addEventListener('change', () => {
@@ -134,5 +168,6 @@ sortSelect.addEventListener('change', () => {
     pageNumber = 1;
     updatePagination();
     displayProducts();
-})
+    preserveState();
+});
 
