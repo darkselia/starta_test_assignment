@@ -1,3 +1,16 @@
+/**
+ * @typedef {Object} Product
+ * @property {number} id
+ * @property {string} name
+ * @property {string} category
+ * @property {number} price
+ * @property {number} stock
+ * @property {number} rating
+ * @property {string} image
+ * @property {string} created_at
+ * @property {number} reviews_count
+ */
+
 const urlParams = new URLSearchParams(window.location.search);
 
 const productTemplate = document.getElementById('product-template');
@@ -25,7 +38,12 @@ inStockOnlyInput.checked = urlParams.get('inStock') === '1';
 const sortSelect = document.getElementById('sort-by');
 sortSelect.value = urlParams.get('sort') || 'date-desc';
 
+const badgeTemplate = document.getElementById('badge-template');
+const medianPriceByCategory = {};
+
+/** @type {Product[]} */
 let products = [];
+/** @type {Product[]} */
 let filteredProducts = [];
 let pageNumber = urlParams.get('page') ?? 1;
 
@@ -34,6 +52,22 @@ async function fetchProducts() {
         const response = await fetch('/api/products.json');
         products = await response.json();
         filteredProducts = products;
+
+        const pricesByCategory = {};
+
+        for (const product of products) {
+            if (!pricesByCategory[product.category]) {
+                pricesByCategory[product.category] = [];
+            }
+            pricesByCategory[product.category].push(product.price);
+        }
+        for (const category in pricesByCategory) {
+            const prices = pricesByCategory[category].sort((a, b) => a - b);
+            const mid = Math.floor(prices.length / 2);
+            medianPriceByCategory[category] = prices.length % 2 !== 0
+                ? prices[mid]
+                : (prices[mid - 1] + prices[mid]) / 2;
+        }
     } catch (error) {
         console.error('Error fetching products:', error);
         return [];
@@ -54,20 +88,38 @@ function displayProducts() {
         productElement.querySelector('.product__image').src = product.image.includes('picsum.photos')
             ? `${product.image}?random=${product.id}`
             : product.image;
-        /*productElement.querySelector('.product__image').src = product.image;*/
         productElement.querySelector('.product__image').alt = product.name;
         productElement.querySelector('.product__name').textContent = product.name;
         productElement.querySelector('.product__price').textContent = product.price.toFixed(2);
+        productElement.querySelector('.product__stock').textContent = product.stock > 0 ? 'В наличии' : 'Нет в наличии';
+
         let productRating = productElement.querySelector('.product__rating');
         productRating.textContent = product.rating.toFixed(2);
+
         if (product.rating <= 3) productRating.classList.add('product__rating_bad');
         else if (product.rating >= 4.5) productRating.classList.add('product__rating_good');
         else productRating.classList.add('product__rating_average');
-
-
-        productElement.querySelector('.product__stock').textContent = product.stock > 0 ? 'In Stock' : 'Out of Stock';
+        const badges = [];
+        if (Date.now() - new Date(product.created_at) <= 30 * 24 * 60 * 60 * 1000) {
+            badges.push(createBadge('Новинка'));
+        }
+        if (product.rating >= 4.7 && product.reviews_count >=50) {
+            badges.push(createBadge('Топ-рейтинг'));
+        }
+        if (badges.length < 2 && product.price / medianPriceByCategory[product.category] <= 0.85) {
+            badges.push(createBadge('Выгодно'));
+        }
+        if (badges.length < 2 && product.stock <= 3) {
+            badges.push(createBadge('Последний на складе'));
+        }
+        const badgeElement = productElement.querySelector('.product__badges');
+        for (const badge of badges) {
+            badgeElement.appendChild(badge)
+        }
         productGrid.appendChild(productElement);
+
     }
+
 }
 
 function sortProducts() {
@@ -124,6 +176,12 @@ function preserveState() {
     state.set('page', pageNumber.toString());
     const newUrl = `?${state}`;
     window.history.pushState({}, '', newUrl);
+}
+
+function createBadge(text) {
+    const badge = badgeTemplate.content.cloneNode(true);
+    badge.querySelector('.badge').textContent = text;
+    return badge;
 }
 
 updatePagination();
