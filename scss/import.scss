@@ -1,6 +1,8 @@
+@use "partials/reset";
 @use "partials/variables";
 @use "partials/nav";
 @use "partials/main-content";
+@use "partials/ui";
 
 .import-form {
   max-width: 300px;
@@ -9,7 +11,9 @@
   align-items: center;
   gap: 32px;
   padding: 32px;
-  border: 2px solid variables.$primary-color;
+  border: 2px solid variables.$on-primary-color;
   border-radius: variables.$border-radius;
-  background: variables.$secondary-color;
+  background: variables.$primary-color;
+  margin-top: 20px;
 }
+
