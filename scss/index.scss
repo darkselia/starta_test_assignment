@@ -1,11 +1,19 @@
+@use "partials/reset";
 @use "partials/variables";
 @use "partials/nav";
 @use "partials/main-content";
+@use "partials/ui";
+
 
 .main-content {
+  position: relative;
   display: grid;
   grid-template-columns: 200px 1fr;
   gap: 16px;
+
+  &__header {
+    grid-column: 1 / -1;
+  }
 }
 
 .product-grid {
@@ -15,21 +23,99 @@
 }
 
 .product {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
+  border: 2px solid black;
+  border-radius: variables.$border-radius;
+  padding: 16px;
+  background: variables.$primary-color;
 
   &__image {
     width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: contain;
+    aspect-ratio: 1;
+    object-fit: scale-down;
+  }
+
+  &__rating {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border-radius: variables.$border-radius;
+    color: white;
+    padding: 6px 8px;
+    font-weight: bold;
+
+    &_good {
+      background-color: green;
+    }
+
+    &_average {
+      background-color: orange;
+      color: black;
+    }
+
+    &_bad {
+      background-color: red;
+    }
   }
 }
 
 .pagination {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
   gap: 10px;
+}
+
+.filters {
+  position: sticky;
+  top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 2px solid black;
+  border-radius: variables.$border-radius;
+  background: variables.$primary-color;
+  align-self: start;
+}
+
+.filter-group {
+
+}
+
+@media (width >= 1600px) {
+  .main-content {
+    grid-template-columns: 250px 1fr;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (width <= 1000px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .filters {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 8px;
+
+    &__header {
+      display: none;
+    }
+
+  }
+
 }
