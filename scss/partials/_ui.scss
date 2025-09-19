@@ -1,0 +1,21 @@
+@use "variables";
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Arial', sans-serif;
+  color: variables.$on-primary-color;
+  margin: 10px 0;
+}
+
+button {
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+
+  &:hover {
+    background-color: variables.$secondary-color;
+  }
+}
