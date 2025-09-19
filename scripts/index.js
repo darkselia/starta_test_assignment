@@ -13,51 +13,11 @@ const maxPriceInput = document.getElementById('max-price');
 const minRatingInput = document.getElementById('min-rating');
 const inStockOnlyInput = document.getElementById('in-stock');
 
+const sortSelect = document.getElementById('sort-by');
 
 let products = [];
 let filteredProducts = [];
 let pageNumber = 1;
-
-previousButton.addEventListener('click', () => {
-    pageNumber--;
-    updatePagination();
-    displayProducts();
-});
-nextButton.addEventListener('click', () => {
-    pageNumber++;
-    updatePagination();
-    displayProducts();
-});
-
-filterForm.addEventListener('submit', event => {
-    event.preventDefault();
-
-    const searchTerm = searchInput.value.toLowerCase();
-    const category = categorySelect.value;
-    const minPrice = minPriceInput.value ? parseFloat(minPriceInput.value) : 0;
-    const maxPrice = maxPriceInput.value ? parseFloat(maxPriceInput.value) : Infinity;
-    const minRating = minRatingInput.value ? parseFloat(minRatingInput.value) : 0;
-    const inStockOnly = inStockOnlyInput.checked;
-
-    filteredProducts = products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm) &&
-        (!category || product.category === category) &&
-        product.price >= minPrice &&
-        product.price <= maxPrice &&
-        product.rating >= minRating &&
-        (!inStockOnly || product.stock > 0)
-    );
-    pageNumber = 1;
-    updatePagination();
-    displayProducts();
-});
-
-filterForm.addEventListener('reset', () => {
-    filteredProducts = products;
-    pageNumber = 1;
-    updatePagination();
-    displayProducts();
-});
 
 function updatePagination() {
     previousButton.disabled = pageNumber === 1;
@@ -100,5 +60,79 @@ function displayProducts() {
     }
 }
 
+function sortProducts() {
+    const sortBy = sortSelect.value;
+    switch (sortBy) {
+        case 'date-asc':
+            filteredProducts.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+            break;
+        case 'date-desc':
+            filteredProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            break;
+        case 'price-asc':
+            filteredProducts.sort((a, b) => a.price - b.price);
+            break;
+        case 'price-desc':
+            filteredProducts.sort((a, b) => b.price - a.price);
+            break;
+        case 'rating-asc':
+            filteredProducts.sort((a, b) => a.rating - b.rating);
+            break;
+        case 'rating-desc':
+            filteredProducts.sort((a, b) => b.rating - a.rating);
+            break;
+
+    }
+}
+
 updatePagination();
 fetchProducts().then(displayProducts).then(updatePagination);
+
+previousButton.addEventListener('click', () => {
+    pageNumber--;
+    updatePagination();
+    displayProducts();
+});
+nextButton.addEventListener('click', () => {
+    pageNumber++;
+    updatePagination();
+    displayProducts();
+});
+
+filterForm.addEventListener('submit', event => {
+    event.preventDefault();
+
+    const searchTerm = searchInput.value.toLowerCase();
+    const category = categorySelect.value;
+    const minPrice = minPriceInput.value ? parseFloat(minPriceInput.value) : 0;
+    const maxPrice = maxPriceInput.value ? parseFloat(maxPriceInput.value) : Infinity;
+    const minRating = minRatingInput.value ? parseFloat(minRatingInput.value) : 0;
+    const inStockOnly = inStockOnlyInput.checked;
+
+    filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm) &&
+        (!category || product.category === category) &&
+        product.price >= minPrice &&
+        product.price <= maxPrice &&
+        product.rating >= minRating &&
+        (!inStockOnly || product.stock > 0)
+    );
+    pageNumber = 1;
+    updatePagination();
+    displayProducts();
+});
+
+filterForm.addEventListener('reset', () => {
+    filteredProducts = products;
+    pageNumber = 1;
+    updatePagination();
+    displayProducts();
+});
+
+sortSelect.addEventListener('change', () => {
+    sortProducts();
+    pageNumber = 1;
+    updatePagination();
+    displayProducts();
+})
+

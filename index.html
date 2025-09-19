@@ -23,7 +23,19 @@
 
 
 <section class="main-content">
-    <h1 class="main-content__header">Публичный каталог</h1>
+    <section class="sort">
+        <label class="sort__label" for="sort-by">Сортировка:</label>
+        <select id="sort-by" class="sort__select">
+            <option value="date-asc">новизна⬆️</option>
+            <option value="date-desc">новизна⬇️️</option>
+            <option value="price-asc">цена⬆️</option>
+            <option value="price-desc">цена⬇️</option>
+            <option value="rating-asc">рейтинг⬆️</option>
+            <option value="rating-desc">рейтинг⬇️️</option>
+        </select>
+    </section>
+
+    <h1>Публичный каталог</h1>
 
     <form id="filters" class="filters">
         <h2 class="filters__header">Фильтры</h2>
