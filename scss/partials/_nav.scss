@@ -4,24 +4,23 @@
   display: flex;
   gap: 10px;
   padding: 20px 0 0 16px;
-  border-bottom: 2px solid variables.$on-primary-color;
+  border-bottom: 3px solid variables.$primary-color;
 
   &__links {
     padding: 4px 6px;
     color: black;
-    border: 1px solid variables.$on-primary-color;
+    border: 2px solid variables.$primary-color;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     text-decoration: none;
     outline: none;
     border-bottom-color: variables.$surface-color;
 
-    &_active {
+    &--active {
       position: relative;
       background-color: variables.$surface-color;
       z-index: 1;
-      transform: translateY(2px);
+      transform: translateY(3px);
     }
   }
 }
-

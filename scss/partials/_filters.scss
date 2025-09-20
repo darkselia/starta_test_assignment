@@ -1,0 +1,54 @@
+@use 'variables';
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 2px solid black;
+  border-radius: variables.$border-radius;
+  background: variables.$primary-container-color;
+  align-self: start;
+
+  &__header {
+    margin-bottom: 10px;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ece6f7;
+
+    &--row {
+      flex-direction: row;
+    }
+  }
+
+  &__group-label {
+    color: variables.$on-primary-container-color;
+    margin-bottom: 2px;
+    font-weight: bold;
+  }
+
+  &__group-input[type="text"],
+  &__group-input[type="number"],
+  &__group-select {
+    border: 1.5px solid #e0d7f7;
+    border-radius: 7px;
+    padding: 6px 10px;
+    transition: border-color 0.2s;
+    outline: none;
+
+    &:focus {
+      border-color: variables.$primary-color;
+    }
+  }
+
+  &__group-input[type="checkbox"] {
+    accent-color: variables.$primary-color;
+    width: 18px;
+    height: 18px;
+  }
+}

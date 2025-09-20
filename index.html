@@ -22,21 +22,21 @@
 </template>
 
 <nav class="nav">
-    <a class="nav__links nav__links_active" href="/index.html">Каталог</a>
+    <a class="nav__links nav__links--active" href="/index.html">Каталог</a>
     <a class="nav__links" href="/admin/import.html">Импорт товаров</a>
 </nav>
 
 
 <section class="main-content">
     <section class="sort">
-        <label class="sort__label" for="sort-by">Сортировка:</label>
+        <label class="sort__label" for="sort-by">⇅ Сортировка:</label>
         <select id="sort-by" class="sort__select">
-            <option value="date-desc">новизна⬇️️</option>
-            <option value="date-asc">новизна⬆️</option>
-            <option value="price-desc">цена⬇️</option>
-            <option value="price-asc">цена⬆️</option>
-            <option value="rating-desc">рейтинг⬇️️</option>
-            <option value="rating-asc">рейтинг⬆️</option>
+            <option value="date-desc">новые⬇️️</option>
+            <option value="date-asc">прошлые⬆️</option>
+            <option value="price-desc">дороже⬇️</option>
+            <option value="price-asc">дешевле⬆️</option>
+            <option value="rating-desc">с высоким рейтингом⬇️️</option>
+            <option value="rating-asc">с низким рейтингом⬆️</option>
         </select>
     </section>
 
@@ -44,13 +44,13 @@
 
     <form id="filters" class="filters">
         <h2 class="filters__header">Фильтры</h2>
-        <div class="filters__block">
-            <label for="search">Поиск:</label>
-            <input type="text" id="search" placeholder="Введите название товара">
+        <div class="filters__group">
+            <label class="filters__group-label" for="search">Поиск:</label>
+            <input type="text" id="search" class="filters__group-input" placeholder="Введите название товара">
         </div>
-        <div class="filters__block">
-            <label for="category">Категория:</label>
-            <select id="category">
+        <div class="filters__group">
+            <label class="filters__group-label" for="category">Категория:</label>
+            <select id="category" class="filters__group-select">
                 <option value="">Все</option>
                 <option value="kitchen">Кухня</option>
                 <option value="electronics">Электроника</option>
@@ -58,19 +58,19 @@
                 <option value="beauty">Красота</option>
             </select>
         </div>
-        <div class="filters__block">
-            <label for="min-price">Мин. цена:</label>
-            <input type="number" id="min-price" placeholder="0" min="0">
-            <label for="max-price">Макс. цена:</label>
-            <input type="number" id="max-price" placeholder="10000" min="0">
+        <div class="filters__group">
+            <label class="filters__group-label" for="min-price">Мин. цена:</label>
+            <input type="number" id="min-price" class="filters__group-input" placeholder="0" min="0">
+            <label class="filters__group-label" for="max-price">Макс. цена:</label>
+            <input type="number" id="max-price" class="filters__group-input" placeholder="10000" min="0">
         </div>
-        <div class="filters__block">
-            <label for="min-rating">Мин. рейтинг:</label>
-            <input type="number" id="min-rating" placeholder="0" min="0" max="5" step="0.1">
+        <div class="filters__group">
+            <label class="filters__group-label" for="min-rating">Мин. рейтинг:</label>
+            <input type="number" id="min-rating" class="filters__group-input" placeholder="0" min="0" max="5" step="0.1">
         </div>
-        <div class="filters__block">
-            <label for="in-stock">В наличии:</label>
-            <input type="checkbox" id="in-stock">
+        <div class="filters__group filters__group--row">
+            <label class="filters__group-label" for="in-stock">В наличии:</label>
+            <input type="checkbox" id="in-stock" class="filters__group-input">
         </div>
         <button type="submit">Применить</button>
         <button type="reset">Очистить</button>

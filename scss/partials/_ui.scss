@@ -2,7 +2,7 @@
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Arial', sans-serif;
-  color: variables.$on-primary-color;
+  color: variables.$on-surface-color;
   margin: 10px 0;
 }
 
@@ -11,11 +11,13 @@ button {
   padding: 10px 20px;
   text-align: center;
   margin: 4px 2px;
-  cursor: pointer;
   border-radius: 4px;
   transition-duration: 0.4s;
 
-  &:hover {
-    background-color: variables.$secondary-color;
+  &:enabled:hover {
+    cursor: pointer;
+    background-color: variables.$primary-color;
+    color: variables.$on-primary-color;
+    box-shadow: variables.$dark-primary-color 0 2px 4px 0;
   }
 }
