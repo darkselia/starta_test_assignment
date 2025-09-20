@@ -9,12 +9,14 @@
 <body>
 <template id="product-template">
     <article class="product">
-        <img class="product__image" src="" alt="Изображение товара">
-        <h2 class="product__name">Товар 1</h2>
-        <p>Цена: <span class="product__price">0</span> руб.</p>
+        <div class="product__image-wrapper">
+            <img class="product__image" src="" alt="Изображение товара">
+            <div class="product__badges"></div>
+        </div>
+        <h3 class="product__name">Товар 1</h3>
+        <p class="product__price"><span class="product__price-number">0</span> руб.</p>
         <p class="product__rating"></p>
         <p class="product__stock"></p>
-        <div class="product__badges"></div>
     </article>
 </template>
 <template id="badge-template">

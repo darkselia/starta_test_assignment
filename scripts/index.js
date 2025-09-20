@@ -23,15 +23,15 @@ const PAGE_SIZE = 12;
 
 const filterForm = document.getElementById('filters');
 const searchInput = document.getElementById('search');
-searchInput.value = urlParams.get('q') || '';
+searchInput.value = urlParams.get('q') ?? '';
 const categorySelect = document.getElementById('category');
-categorySelect.value = urlParams.get('cat') || '';
+categorySelect.value = urlParams.get('cat') ?? '';
 const minPriceInput = document.getElementById('min-price');
-minPriceInput.value = urlParams.get('min') || '';
+minPriceInput.value = urlParams.get('min') ?? '';
 const maxPriceInput = document.getElementById('max-price');
-maxPriceInput.value = urlParams.get('max') || '';
+maxPriceInput.value = urlParams.get('max') ?? '';
 const minRatingInput = document.getElementById('min-rating');
-minRatingInput.value = urlParams.get('rating') || '';
+minRatingInput.value = urlParams.get('rating') ?? '';
 const inStockOnlyInput = document.getElementById('in-stock');
 inStockOnlyInput.checked = urlParams.get('inStock') === '1';
 
@@ -45,7 +45,7 @@ const medianPriceByCategory = {};
 let products = [];
 /** @type {Product[]} */
 let filteredProducts = [];
-let pageNumber = urlParams.get('page') ?? 1;
+let pageNumber = Number(urlParams.get('page')) || 1;
 
 async function fetchProducts() {
     try {
@@ -90,34 +90,33 @@ function displayProducts() {
             : product.image;
         productElement.querySelector('.product__image').alt = product.name;
         productElement.querySelector('.product__name').textContent = product.name;
-        productElement.querySelector('.product__price').textContent = product.price.toFixed(2);
+        productElement.querySelector('.product__price-number').textContent = product.price.toFixed(2);
         productElement.querySelector('.product__stock').textContent = product.stock > 0 ? 'В наличии' : 'Нет в наличии';
 
         let productRating = productElement.querySelector('.product__rating');
         productRating.textContent = product.rating.toFixed(2);
 
-        if (product.rating <= 3) productRating.classList.add('product__rating_bad');
-        else if (product.rating >= 4.5) productRating.classList.add('product__rating_good');
-        else productRating.classList.add('product__rating_average');
+        if (product.rating <= 3) productRating.classList.add('product__rating--bad');
+        else if (product.rating >= 4.5) productRating.classList.add('product__rating--good');
+        else productRating.classList.add('product__rating--average');
         const badges = [];
         if (Date.now() - new Date(product.created_at) <= 30 * 24 * 60 * 60 * 1000) {
-            badges.push(createBadge('Новинка'));
+            badges.push(createBadge('✨Новинка', "new"));
         }
-        if (product.rating >= 4.7 && product.reviews_count >=50) {
-            badges.push(createBadge('Топ-рейтинг'));
+        if (product.rating >= 4.7 && product.reviews_count >= 50) {
+            badges.push(createBadge('⬆️Топ-рейтинг', "top"));
         }
         if (badges.length < 2 && product.price / medianPriceByCategory[product.category] <= 0.85) {
-            badges.push(createBadge('Выгодно'));
+            badges.push(createBadge('🪄Выгодно', "profit"));
         }
         if (badges.length < 2 && product.stock <= 3) {
-            badges.push(createBadge('Последний на складе'));
+            badges.push(createBadge('❕Последний на складе', "last"));
         }
         const badgeElement = productElement.querySelector('.product__badges');
         for (const badge of badges) {
-            badgeElement.appendChild(badge)
+            badgeElement.appendChild(badge);
         }
         productGrid.appendChild(productElement);
-
     }
 
 }
@@ -178,9 +177,11 @@ function preserveState() {
     window.history.pushState({}, '', newUrl);
 }
 
-function createBadge(text) {
+function createBadge(text, bageModifier) {
     const badge = badgeTemplate.content.cloneNode(true);
-    badge.querySelector('.badge').textContent = text;
+    const badgeElement = badge.querySelector('.badge');
+    badgeElement.textContent = text;
+    badgeElement.classList.add('badge--' + bageModifier);
     return badge;
 }
 
@@ -228,4 +229,3 @@ sortSelect.addEventListener('change', () => {
     displayProducts();
     preserveState();
 });
-

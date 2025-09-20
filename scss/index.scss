@@ -3,7 +3,7 @@
 @use "partials/ui";
 @use "partials/nav";
 @use "partials/main-content";
-@use "partials/ui";
+@use "partials/badge";
 @use "partials/sort";
 @use "partials/filters";
 @use "partials/product-card";
@@ -33,23 +33,6 @@
   align-items: center;
   margin-top: 20px;
   gap: 10px;
-}
-
-.filters {
-  position: sticky;
-  top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-  border: 2px solid black;
-  border-radius: variables.$border-radius;
-  background: variables.$primary-color;
-  align-self: start;
-}
-
-.filter-group {
-
 }
 
 @media (width >= 1600px) {

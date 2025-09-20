@@ -1,0 +1,26 @@
+@use "variables";
+
+.badge {
+  border-radius: variables.$border-radius;
+  color: white;
+  padding: 4px 8px 6px 4px;
+  font-weight: bold;
+  font-size: 0.7em;
+  text-align: center;
+
+  &--new {
+    background: #3e98c1;
+  }
+
+  &--top {
+    background: #43A047;
+  }
+
+  &--profit {
+    background: #b726ff;
+  }
+
+  &--last {
+    background: #e46663;
+  }
+}
