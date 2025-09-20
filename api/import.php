@@ -55,7 +55,7 @@ foreach ($data as $i => $row) {
         $errors[] = "Строка $i: поле price должно быть числом";
     }
     if (isset($row['stock']) && !is_int($row['stock'])) {
-        $errors[] = "Строка $i: поле stock должно быть целым числом";
+        $errors[] = "Строка $i: поле stock должно быть целым неотрицательным числом";
     }
     if (isset($row['rating']) && (!is_numeric($row['rating']) || $row['rating'] < 0 || $row['rating'] > 5)) {
         $errors[] = "Строка $i: поле rating должно быть числом от 0 до 5";
@@ -71,7 +71,16 @@ if ($errors) {
     exit;
 }
 
+foreach ($data as &$row) {
+    $row['id'] = (int)$row['id'];
+    $row['name'] = (string)$row['name'];
+    $row['category'] = (string)$row['category'];
+    $row['price'] = (float)$row['price'];
+    $row['stock'] = (int)$row['stock'];
+    $row['rating'] = (float)$row['rating'];
+    $row['created_at'] = (string)$row['created_at'];
+}
+unset($row);
+
 file_put_contents(__DIR__ . '/../api/products.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 echo json_encode(['success' => true]);
-
-
