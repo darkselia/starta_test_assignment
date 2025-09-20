@@ -38,3 +38,21 @@
 - Нет поддержки загрузки изображений через импорт.
 - Валидация ограничена только основными полями.
 - Нет серверной поддержки пагинации.
+
+## Демонстрация дизайна
+Страница импорта
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/bfc14227-51f5-46c9-ad79-c000b96d7142" />
+
+Страница товаров
+<img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/8c2b145b-ff68-4b88-831c-35ce337b65cf" />
+
+
+Сортировка "Дешевле", фильтр "Макс. цена" = 2000, страница 2
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/3905c8ff-f006-4892-b8a5-08fb00a15e00" />
+
+Мобильная версия
+
+<img width="383" height="850" alt="image" src="https://github.com/user-attachments/assets/f653b67d-65ac-4b8c-b5fe-ed9ae1cebdab" />
+<img width="383" height="850" alt="image" src="https://github.com/user-attachments/assets/cc430d31-fb63-461d-894b-6aff29f68f50" />
+
+
