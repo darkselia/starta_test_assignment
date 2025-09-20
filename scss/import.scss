@@ -11,8 +11,8 @@
   align-items: center;
   gap: 32px;
   padding: 32px;
-  border: 2px solid variables.$on-primary-color;
+  border: 2px solid variables.$primary-color;
   border-radius: variables.$border-radius;
-  background: variables.$primary-color;
+  background: variables.$primary-container-color;
   margin-top: 20px;
 }
